@@ -1,0 +1,18 @@
+[server]
+# IP address and port where Radicale should listen
+hosts = 0.0.0.0:5232
+
+[auth]
+# Authentication backend
+type = htpasswd
+htpasswd_filename = /config/htpasswd
+
+[storage]
+# Storage backend
+type = filesystem
+filesystem_folder = /var/lib/radicale/collections
+
+[logging]
+# Logging configuration
+config = /config/logging.ini
+

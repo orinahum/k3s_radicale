@@ -1,25 +1,30 @@
-# k3s_radicale
+# Radicale Calendar Application on K3s
 
-# Setup App Docker Container & Deployuent With Service
-/bin/bash 1271JJ
-Your development team requires to use online calendar that can scale. You were provided with request t alendar application called [radicalel (https://radicale.org/v3.html) •
-As part of your setup, you are required to create radicale container and save it in your container reg icale deploymentment, physical volume claim and service to be accessed from the local network.
+## Overview
+This project sets up an auto-scaled calendar application using Radicale, Docker, and Kubernetes (K3s). The app is configured to work with persistent volumes and external configuration. It includes the following features:
+- Three versions of Radicale: latest, stable, and test
+- Docker images are built and pushed to Docker Hub
+- Kubernetes deployment with resource management, secrets, persistent volumes, and ingress for external access.
 
-### Tasks
--  ⁠Setup docker container with radicale
-  -⁠  ⁠Config should be mounted externally
-  -  ⁠Ports need to be exposed
-  -⁠  ⁠Dockerfile needs to be as small as possible
-  -  ⁠Radicale needs initial password for login that needs to be set in config file. use env var to in:
--  ⁠Save container to registry, hub or any other
-  -  ⁠Use multiple versions: stable, test, latest (according to radicale docs)
--⁠  ⁠Generate deployment, service, ingress and physical volume for radicale to deploy to k3s cluster
+## Project Structure
+- `Dockerfile-latest`, `Dockerfile-stable`, `Dockerfile-test`: Dockerfiles for different versions of Radicale
+- `build-and-push.sh`: Script to build and push Docker images to Docker Hub
+- `pvc.yaml`: Persistent Volume Claims for Radicale's storage and config
+- `deployment.yaml`: Kubernetes deployment, service, and ingress configuration
+- `INSTALLATION.md`: Detailed installation instructions for setting
 
-### Notes:
--  ⁠As usual:
-  -  ⁠Setup new repo
-  -  ⁠Use README Install ,Tasks and Contribution MD files for respected data
-  - ⁠  ⁠Document each step
-  -  ⁠Consider scenarious where it might fail and fix them before user gets there
--⁠  ⁠Add Todo list
-  -⁠  ⁠List things that you think may be benefitial to this project
+## Project structure
+k3s_radical/
+├── Dockerfile-latest
+├── Dockerfile-stable
+├── Dockerfile-test
+├── build-and-push.sh
+├── k3s/
+│   ├── deployment.yaml
+│   └── pvc.yaml
+├── config/
+│   └── radicale_config
+├── README.md
+├── INSTALL.md
+└── CONTRIBUTING.md
+└── TASK.md

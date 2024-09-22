@@ -1,0 +1,83 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radicale-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: radicale
+  template:
+    metadata:
+      labels:
+        app: radicale
+    spec:
+      containers:
+      - name: radicale
+        image: your_dockerhub_username/radicale:latest # Use stable or test versions if necessary
+        ports:
+        - containerPort: 5232
+        volumeMounts:
+        - name: radicale-storage
+          mountPath: /var/lib/radicale
+        - name: config-storage
+          mountPath: /config
+        env:
+        - name: RADICALE_USER
+          valueFrom:
+            secretKeyRef:
+              name: radicale-secret
+              key: user
+        - name: RADICALE_PASS
+          valueFrom:
+            secretKeyRef:
+              name: radicale-secret
+              key: password
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+      volumes:
+      - name: radicale-storage
+        persistentVolumeClaim:
+          claimName: radicale-pvc
+      - name: config-storage
+        persistentVolumeClaim:
+          claimName: config-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: radicale-service
+  labels:
+    app: radicale
+spec:
+  selector:
+    app: radicale
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5232
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: radicale-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: radicale.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: radicale-service
+            port:
+              number: 80

@@ -1,0 +1,24 @@
+# Use a small image for Radicale
+FROM python:3.9-alpine
+
+ARG VERSION=v3
+ENV RADICALE_USER=user RADICALE_PASS=changeme
+
+# Install dependencies and Radicale
+RUN apk add --no-cache ca-certificates openssl \
+    && apk add --no-cache --virtual .build-deps gcc libffi-dev musl-dev \
+    && pip install --no-cache-dir "Radicale[bcrypt] @ https://github.com/Kozea/Radicale/archive/${VERSION}.tar.gz" \
+    && apk del .build-deps
+
+# Volumes for config and data
+VOLUME /var/lib/radicale /config
+
+# Expose Radicale port
+EXPOSE 5232
+
+# Copy configuration
+COPY radicale.config /config/radicale.config
+COPY htpasswd /config/htpasswd
+
+# Run Radicale
+CMD ["radicale", "--config", "/config/radicale.config"]
