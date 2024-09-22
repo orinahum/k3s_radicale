@@ -1,7 +1,7 @@
 # Use a small image for Radicale
 FROM python:3.9-alpine
 
-ARG VERSION=2.1.x
+ARG VERSION=$1
 ENV RADICALE_USER=user RADICALE_PASS=changeme
 
 # Install dependencies and Radicale
