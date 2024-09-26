@@ -10,5 +10,3 @@ htpasswd_filename = /config/htpasswd
 [storage]
 # Storage backend
 filesystem_folder = /var/lib/radicale/collections
-
-
