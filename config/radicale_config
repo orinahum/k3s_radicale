@@ -9,10 +9,6 @@ htpasswd_filename = /config/htpasswd
 
 [storage]
 # Storage backend
-type = filesystem
 filesystem_folder = /var/lib/radicale/collections
 
-[logging]
-# Logging configuration
-config = /config/logging.ini
 
