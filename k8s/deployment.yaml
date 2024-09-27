@@ -12,6 +12,10 @@ spec:
       labels:
         app: radicale
     spec:
+      volumes:
+      - name: radicale-storage
+        persistentVolumeClaim:
+          claimName: radicale-pvc
       containers:
       - name: radicale
         image: orinahum1982/radicale:latest
@@ -20,19 +24,6 @@ spec:
         volumeMounts:
         - name: radicale-storage
           mountPath: /var/lib/radicale
-        - name: config-storage
-          mountPath: /config
-        env:
-        - name: RADICALE_USER
-          valueFrom:
-            secretKeyRef:
-              name: radicale-secret
-              key: user
-        - name: RADICALE_PASS
-          valueFrom:
-            secretKeyRef:
-              name: radicale-secret
-              key: password
         resources:
           requests:
             memory: "128Mi"
@@ -40,45 +31,3 @@ spec:
           limits:
             memory: "512Mi"
             cpu: "500m"
-      volumes:
-      - name: radicale-storage
-        persistentVolumeClaim:
-          claimName: radicale-pvc
-      - name: config-storage
-        configMap:
-          name: radicale-config
-          
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: radicale-service
-  labels:
-    app: radicale
-spec:
-  selector:
-    app: radicale
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 5232
-  type: LoadBalancer
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: radicale-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-spec:
-  rules:
-  - host: radicale.local
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: radicale-service
-            port:
-              number: 80
