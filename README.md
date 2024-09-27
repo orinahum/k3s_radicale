@@ -14,20 +14,20 @@ This project sets up an auto-scaled calendar application using Radicale, Docker,
 - `INSTALLATION.md`: Detailed installation instructions for setting
 
 ## Project structure
-[k3s_radical](k3s_radical)/
-├── [text](config)
-|   ├── [text](config/htpasswd)
-|   └── [text](config/radicale_config)
+[k3s_radical](k3s_radical)
+├── [config](config)
+|   ├── [htpasswd](config/htpasswd)
+|   └── [radicale_config](config/radicale_config)
 ├── [k8s](k8s)/
 |   ├── [deployment.yaml](k8s/deployment.yaml)
-|   ├── [text](k8s/ingress.yaml)
+|   ├── [ingress.yaml](k8s/ingress.yaml)
 |   ├── [pvc.yaml](k8s/pvc.yaml)
-|   └── [text](k8s/service.yaml)
+|   └── [service.yaml](k8s/service.yaml)
 ├── [01_Docker-build_and_push.sh](01_Docker-build_and_push.sh)
-├── [text](02_K8S-run_pvc_and_deployment.sh)
+├── [02_K8S-run_pvc_and_deployment.sh](02_K8S-run_pvc_and_deployment.sh)
 ├── [CONTRIBUTING.md](README.md)
 ├── [Dockerfile](Dockerfile)
 ├── [dockerhub_token_encoded](dockerhub_token_encoded)
 ├── [INSTALLATION.md](INSTALLATION.md)
-├── [text](README.md)
+├── [README.md](README.md)
 └── [TASK.md](TASK.md)
