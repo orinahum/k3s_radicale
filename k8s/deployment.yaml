@@ -22,9 +22,6 @@ spec:
           mountPath: /var/lib/radicale
         - name: config-storage
           mountPath: /config
-        - name: htpasswd-storage
-          mountPath: /config/htpasswd
-          subPath: htpasswd
         env:
         - name: RADICALE_USER
           valueFrom:
@@ -50,9 +47,7 @@ spec:
       - name: config-storage
         configMap:
           name: radicale-config
-      - name: htpasswd-storage
-        secret:
-          secretName: radicale-htpasswd
+          
 ---
 apiVersion: v1
 kind: Service
