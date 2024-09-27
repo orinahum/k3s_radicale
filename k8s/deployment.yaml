@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: radicale
-        image: your_dockerhub_username/radicale:latest # Use stable or test versions if necessary
+        image: orinahum1982/radicale:latest
         ports:
         - containerPort: 5232
         volumeMounts:
@@ -22,6 +22,9 @@ spec:
           mountPath: /var/lib/radicale
         - name: config-storage
           mountPath: /config
+        - name: htpasswd-storage
+          mountPath: /config/htpasswd
+          subPath: htpasswd
         env:
         - name: RADICALE_USER
           valueFrom:
@@ -45,8 +48,11 @@ spec:
         persistentVolumeClaim:
           claimName: radicale-pvc
       - name: config-storage
-        persistentVolumeClaim:
-          claimName: config-pvc
+        configMap:
+          name: radicale-config
+      - name: htpasswd-storage
+        secret:
+          secretName: radicale-htpasswd
 ---
 apiVersion: v1
 kind: Service
@@ -61,7 +67,7 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 5232
-  type: ClusterIP
+  type: LoadBalancer
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

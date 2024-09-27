@@ -12,7 +12,8 @@ RUN apk add --no-cache gcc musl-dev libffi-dev ca-certificates openssl \
     else \
         pip install --no-cache-dir "Radicale[${DEPENDENCIES}] @ https://github.com/Kozea/Radicale/archive/${VERSION}.tar.gz"; \
     fi \
-    && apk del gcc musl-dev libffi-dev
+    && apk del gcc musl-dev libffi-dev \
+    && mkdir -p /config
 
 # Volumes for config and data
 VOLUME /var/lib/radicale /config
@@ -21,8 +22,11 @@ VOLUME /var/lib/radicale /config
 EXPOSE 5232
 
 # Copy configuration
-COPY ./radicale_config /config/radicale.config
-COPY ./htpasswd /config/htpasswd
+COPY ./config/radicale.config /config/radicale.config
+COPY ./config/htpasswd /config/htpasswd
+
+# Set permissions
+RUN chmod 644 ./config/radicale.config
 
 # Run Radicale
 CMD ["radicale", "--config", "/config/radicale.config"]

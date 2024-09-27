@@ -14,15 +14,16 @@ This project sets up an auto-scaled calendar application using Radicale, Docker,
 - `INSTALLATION.md`: Detailed installation instructions for setting
 
 ## Project structure
-k3s_radical/
+[k3s_radical](k3s_radical)/
+├── [text](config)
+    ├── [text](config/htpasswd)
+    └── [text](config/radicale_config)
 ├── [k3s](k3s)/
-│   ├── deployment.yaml
-│   └── pvc.yaml
-├── build-and-push.sh
-├── Dockerfile
-├── dockerhub_token_encoded
-├── htpasswd
-├── README.md
-├── [INSTALL](INSTALLATION.md)
-├── CONTRIBUTING.md
-├── TASK.md
+    ├── [deployment.yaml](k3s/deployment.yaml)
+    └── [pvc.yaml](k3s/pvc.yaml)
+├── [build-and-push.sh](build-and-push.sh)
+├── [Dockerfile](Dockerfile)
+├── [dockerhub_token_encoded](dockerhub_token_encoded)
+├── [INSTALLATION.md](INSTALLATION.md)
+├── [CONTRIBUTING.md](README.md)
+├── [TASK.md](TASK.md)
