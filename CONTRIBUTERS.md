@@ -1,14 +1,8 @@
-{ "Contributers": 
-    [
-        {
-            'full_name':'Ori Nahum',
-            'nickname':'orinahum',
-            'contribute':50
-        },
-        {
-            'full_name':'Avishay Layani',
-            'nickname':'layani',
-            'contribute':50
-        }
-    ]
-}
+# Contributers: 
+###    FullName: Ori Nahum
+        NickName: orinahum
+        Contribute: 50%
+###    FullName: Avishay Layani
+        NickName: alayani
+        Contribute: 50%
+
