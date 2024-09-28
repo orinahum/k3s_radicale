@@ -8,13 +8,9 @@ Before you begin, ensure you have the following installed:
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) - Kubernetes CLI
 
 ## Step-by-Step Installation
-1. Build and Push Docker Images
-    - chmod +x 01_Docker-build_and_push.sh
-    - ./01_Docker-build_and_push.sh
-
-2. Set Up K3s/K8s:
+1. Setup K3s/K8s:
     #### K3s
-    - curl -sfL https://get.k3s.io | sh -
+    - curl -L get.k3s.io | K3S_KUBECONFIG_MODE="644" sh -
     - export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
     - [RTFM] follow: https://docs.k3s.io/installation/
     #### K8s
@@ -22,18 +18,11 @@ Before you begin, ensure you have the following installed:
     - [macOS]   follow: https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/
     - [Windows] follow: https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/
 
-3. Apply K8s/K3s to Deploy Radicale:
-    - chmod +x 02_K8S-apply_configuration.sh
-    - ./02_K8S-apply_configuration.sh
+2. Run setup instalation script:
+    - chmod +x setup.sh
+    - ./setup.sh
 
-4. Access Radicale by versions at:
+3. Access Radicale by versions at:
     - Latest: http://localhost
     - Stable: http://localhost:90
     - Test: http://localhost:100
-
-5. Delete K8s/K3s to Undeploy Radicale:
-    - chmod +x 03_K8S-delete_configuration.sh
-    - ./03_K8S-delete_configuration.sh
-
-
-
