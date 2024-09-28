@@ -7,6 +7,8 @@ Before you begin, ensure you have the following installed:
 - [K3s](https://k3s.io/) - Lightweight Kubernetes or [K8S](https://kubernetes.io/) - Full Kubernetes
 - [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/) - Kubernetes CLI
 
+#### the application uses posts 80(latest), 90(stable), and 100(test) - these ports must be available
+
 ## Step-by-Step Installation
 1. Setup K3s/K8s:
     #### K3s
