@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radicale-deployment-latest
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: radicale
+      version: latest
+  template:
+    metadata:
+      labels:
+        app: radicale
+        version: latest
+    spec:
+      volumes:
+      - name: radicale-storage
+        persistentVolumeClaim:
+          claimName: radicale-pvc
+      containers:
+      - name: radicale
+        image: orinahum1982/radicale:latest
+        ports:
+        - containerPort: 5232  # This is the internal container port
+        volumeMounts:
+        - name: radicale-storage
+          mountPath: /var/lib/radicale
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"

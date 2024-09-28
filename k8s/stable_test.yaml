@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: radicale-service-test
+  labels:
+    app: radicale
+    version: test
+spec:
+  type: LoadBalancer
+  selector:
+    app: radicale
+    version: test
+  ports:
+  - protocol: TCP
+    port: 100         # External port for test version
+    targetPort: 5232  # Internal port in the container
