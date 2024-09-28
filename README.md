@@ -9,11 +9,12 @@ This project sets up an auto-scaled calendar application using Radicale, Docker,
 ## Project Structure
 - `Dockerfile`: Dynamic Dockerfile for different versions of Radicale
 - `01_Docker-build_and_push.sh`: Script to build and push Docker images to Docker Hub
-- `pvc.yaml`: Persistent Volume Claims for Radicale's storage and config
-- `deployment.yaml`: Kubernetes deployment, service, and ingress configuration
+- `02_K8S-run_pvc_and_deployment.sh`: Script to apply Kubernetes 
+- `deployment.yaml`: Kubernetes deployment configuration
+- `ingress.yaml`: Kubernetes ingress configuration
+- `pvc.yaml`: Kubernetes Persistent Volume Claims for Radicale's storage
+- `service.yaml`: Kubernetes service configuration
 - `INSTALLATION.md`: Detailed installation instructions for setting
-
-### Project structure
 ```
 k3s_radical
 ├── config
