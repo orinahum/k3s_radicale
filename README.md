@@ -11,8 +11,8 @@ It includes the following features:
 ## Project Structure
 - `Dockerfile`: Dynamic Dockerfile for different versions of Radicale
 - `01_Docker-build_and_push.sh`: Script to build and push Docker images to Docker Hub
-- `02_K8S-apply configuration.sh`: Script to apply Kubernetes configuration
-- `03_K8S-delete configuration.sh`: Script to apply Kubernetes configuration
+- `02_K8S-apply_configuration.sh`: Script to apply Kubernetes configuration
+- `03_K8S-delete_configuration.sh`: Script to apply Kubernetes configuration
 - `deployment.yaml`: Kubernetes deployment configuration for Radicale's version
 - `ingress.yaml`: Kubernetes ingress configuration for Radicale's version
 - `pvc.yaml`: Kubernetes Persistent Volume Claims for Radicale's version
@@ -29,8 +29,8 @@ k8s_Radical
 │   ├── pvc.yaml
 │   └── service.yaml
 ├── 01_Docker-build_and_push.sh
-├── 02_K8S-apply configuration.sh
-├── 03_K8S-delete configuration.sh
+├── 02_K8S-apply_configuration.sh
+├── 03_K8S-delete_configuration.sh
 ├── CONTRIBUTING.md
 ├── Dockerfile
 ├── dockerhub_token_encoded

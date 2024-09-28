@@ -1,3 +1,4 @@
+![My Image](./assets/installation.png)
 # Installation Guide
 
 ## Prerequisites
@@ -21,14 +22,18 @@ Before you begin, ensure you have the following installed:
     - [macOS]   follow: https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/
     - [Windows] follow: https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/
 
-3. Apply K8s/K3s for Deploy Radicale
-    - chmod +x 02_K8S-apply configuration.sh
-    - ./02_K8S-apply configuration.sh
+3. Apply K8s/K3s to Deploy Radicale:
+    - chmod +x 02_K8S-apply_configuration.sh
+    - ./02_K8S-apply_configuration.sh
 
 4. Access Radicale by versions at:
     - Latest: http://localhost
     - Stable: http://localhost:90
     - Test: http://localhost:100
+
+5. Delete K8s/K3s to Undeploy Radicale:
+    - chmod +x 03_K8S-delete_configuration.sh
+    - ./03_K8S-delete_configuration.sh
 
 
 
