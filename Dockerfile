@@ -22,11 +22,7 @@ VOLUME /var/lib/radicale /config
 EXPOSE 5232
 
 # Copy configuration
-COPY ./config/radicale.config /config/radicale.config
-COPY ./config/htpasswd /config/htpasswd
-
-# Set permissions
-RUN chmod 644 ./config/radicale.config
+COPY ./config/ /config/
 
 # Run Radicale
 CMD ["radicale", "--config", "/config/radicale.config"]

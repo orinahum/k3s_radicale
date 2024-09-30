@@ -9,20 +9,18 @@ It includes the following features:
 - Kubernetes deployment with resource management, persistent volumes, services, and ingress for external access.
 
 ## Project Structure
-- `Dockerfile`: Dynamic Dockerfile for different versions of Radicale
-- `setup.sh`: Run interactive installation script
-- `deployments`: Kubernetes deployment configuration files per Radicale's version
-- `ingress.yaml`: Kubernetes ingress configuration for Radicale's version
-- `pvc.yaml`: Kubernetes Persistent Volume Claims for Radicale's version
-- `services`: Kubernetes service configuration files per Radicale's version
-- `INSTALLATION.md`: Detailed installation instructions for setting
+- [`Dockerfile`](Dockerfile): A Dynamic Dockerfile supporting multiple Radicale versions.
+- [`setup.sh`](setup.sh): An interactive Bash script for installation.
+- [`deployment_tmp.yaml`](deployment_tmp.yaml): Template for Kubernetes deployment configuration specific to Radicale versions.
+- [`k8s/ingress.yaml`](k8s/ingress.yaml): Kubernetes ingress configuration for Radicale versions.
+- [`k8s/pv.yaml`](k8s/pv.yaml): Kubernetes Persistent Volume configuration for Radicale versions.
+- [`k8s/pvc.yaml`](k8s/pvc.yaml): Kubernetes Persistent Volume Claims configuration for Radicale versions.
+- [`service_tmp.yaml`](service_tmp.yaml): Template for Kubernetes service configuration tailored to Radicale versions.
+- [`INSTALLATION.md`](INSTALLATION.md): Comprehensive installation guide and setup instructions.
+- [`TASK.md`](TASK.md): Detailed description of the assignment and required tasks.
+- [`CONTRIBUTERS.md`](CONTRIBUTERS.md): List of contributors and project collaborators.
 ```
 k8s_Radical
-├── CONTRIBUTERS.md
-├── Dockerfile
-├── INSTALLATION.md
-├── README.md
-├── TASK.md
 ├── assets
 │   ├── contribute.png
 │   ├── installation.png
@@ -31,13 +29,16 @@ k8s_Radical
 │   ├── htpasswd
 │   └── radicale.config
 ├── k8s
-│   ├── deployment_latest.yaml
-│   ├── deployment_stable.yaml
-│   ├── deployment_test.yaml
 │   ├── ingress.yaml
-│   ├── pvc.yaml
-│   ├── service_latest.yaml
-│   ├── service_stable.yaml
-│   └── service_test.yaml
-└── setup.sh
+|   ├── pv.yaml
+│   └── pvc.yaml
+├── .gitignore
+├── CONTRIBUTERS.md
+├── deployment_tmp.yaml
+├── INSTALLATION.md
+├── Dockerfile
+├── README.md
+├── service_tmp.yaml
+├── setup.sh
+└── TASK.md
 ```
