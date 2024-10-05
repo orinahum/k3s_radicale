@@ -19,26 +19,25 @@ It includes the following features:
 - [`INSTALLATION.md`](INSTALLATION.md): Comprehensive installation guide and setup instructions.
 - [`TASK.md`](TASK.md): Detailed description of the assignment and required tasks.
 - [`CONTRIBUTERS.md`](CONTRIBUTERS.md): List of contributors and project collaborators.
-```
-k8s_Radical
-├── assets
-│   ├── contribute.png
-│   ├── installation.png
-│   └── k8s_docker.png
-├── config
-│   ├── htpasswd
-│   └── radicale.config
-├── k8s
-│   ├── ingress.yaml
-|   ├── pv.yaml
-│   └── pvc.yaml
-├── .gitignore
-├── CONTRIBUTERS.md
-├── deployment_tmp.yaml
-├── INSTALLATION.md
-├── Dockerfile
-├── README.md
-├── service_tmp.yaml
-├── setup.sh
-└── TASK.md
-```
+```s
+📁 k8s_Radicale
+├── 📂 assets
+│   ├── 🖼️ contribute.png
+│   ├── 🖼️ installation.png
+│   └── 🖼️ k8s_docker.png
+├── 📂 config
+│   ├── 🔑 htpasswd
+│   └── ⚙️ radicale.config
+├── 📂 k8s
+│   ├── 📜 ingress.yaml
+│   ├── 📜 pv.yaml
+│   └── 📜 pvc.yaml
+├── 📝 .gitignore
+├── 📝 CONTRIBUTERS.md
+├── 📜 deployment_tmp.yaml
+├── 📝 INSTALLATION.md
+├── 🐳 Dockerfile
+├── 📜 README.md
+├── 📜 service_tmp.yaml
+├── ⚙️ setup.sh
+└── 📝 TASK.md
