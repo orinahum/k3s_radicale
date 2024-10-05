@@ -1,18 +1,17 @@
 #!/bin/bash
 
 # Define colors
-RED='\033[1;31m'
+RED='\033[1;91m'
 GREEN='\033[1;32m'
-YELLOW='\033[4;33m'
+YELLOW='\033[1;4;33m'
 CYAN='\033[1;36m'
 BLUE='\033[1;34m'
 MAGENTA='\033[1;35m'
 WHITE='\033[1;37m'
 NC='\033[0m' # No Color
 
-# Sleep time and animations
+# Sleep time
 SLEEP_DURATION=2
-SPINNER="/-\|"
 
 # Docker Hub credentials
 DOCKER_USERNAME="orinahum1982"
@@ -24,23 +23,10 @@ DOCKER_TOKEN=$(echo $DOCKER_TOKEN_BASE64 | base64 --decode)
 VERSIONS=("latest" "stable" "test")
 BUILD_VERSIONS=("${1:-3.2.3}" "${2:-3.2.2}" "${3:-master}")
 
-# Function to show a spinner during long operations
-show_spinner() {
-    local pid=$!
-    local delay=0.1
-    while [ -d /proc/$pid ]; do
-        for i in ${SPINNER}; do
-            printf "\r%s" "$i"
-            sleep $delay
-        done
-    done
-    printf "\r"
-}
-
 # DockerHub login
 login_to_docker() {
     printf "${CYAN}Logging into Docker Hub...${NC}\n"
-    echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin >> /dev/null & show_spinner
+    echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin >> /dev/null
     if [ $? -eq 0 ]; then
         printf "${GREEN}DockerHub login successful!${NC}\n"
     else
@@ -58,13 +44,14 @@ find_replace_and_apply() {
     sed "s/V_PH/${version}/g" deployment_tmp.yaml > k8s/deployment.yaml
     sed "s/V_PH/${version}/g" service_tmp.yaml > k8s/service.yaml
     sed -i "s/V_PH/${port}/g" k8s/service.yaml
-    printf "${CYAN}Deploying version ${YELLOW}${version}${NC} on port ${YELLOW}${port}${NC}...\n"
+    printf "${CYAN}Deploying version ${MAGENTA}${version}${NC} on port ${MAGENTA}${port}${NC}...\n"
     kubectl apply -f ./k8s/pv.yaml
     kubectl apply -f ./k8s/pvc.yaml
     kubectl apply -f ./k8s/service.yaml
     kubectl apply -f ./k8s/ingress.yaml
     kubectl apply -f ./k8s/deployment.yaml
     printf "${GREEN}Deployment of version ${version} completed!${NC}\n"
+    rm -rf k8s/deployment.yaml k8s/service.yaml
 }
 
 # Function to delete Kubernetes resources
@@ -75,13 +62,14 @@ find_replace_and_delete() {
     sed "s/V_PH/${version}/g" deployment_tmp.yaml > k8s/deployment.yaml
     sed "s/V_PH/${version}/g" service_tmp.yaml > k8s/service.yaml
     sed -i "s/V_PH/${port}/g" k8s/service.yaml
-    printf "${CYAN}Deleting version ${YELLOW}${version}${NC}...\n"
+    printf "${CYAN}Deleting version ${MAGENTA}${version}${NC}...\n"
     kubectl delete -f ./k8s/deployment.yaml    
     kubectl delete -f ./k8s/service.yaml
     kubectl delete -f ./k8s/ingress.yaml
     kubectl delete -f ./k8s/pvc.yaml
     kubectl delete -f ./k8s/pv.yaml
     printf "${GREEN}Cleanup of version ${version} completed!${NC}\n"
+    rm -rf k8s/deployment.yaml k8s/service.yaml
 }
 
 # Function to build and push Docker images
@@ -89,7 +77,7 @@ build_and_push() {
     local version=$1
     local build_arg=$2
 
-    printf "${CYAN}Building and pushing Docker image for version ${YELLOW}${version}${NC}...\n"
+    printf "${CYAN}Building and pushing Docker image for version ${MAGENTA}${version}${NC}...\n"
     docker build -f Dockerfile -t $DOCKER_USERNAME/$IMAGE_NAME:$version --build-arg VERSION=$build_arg . --no-cache
     docker push $DOCKER_USERNAME/$IMAGE_NAME:$version
     if [ $? -eq 0 ]; then
@@ -119,7 +107,7 @@ handle_version_operations() {
 # Menu logic with a clean, professional look
 while true; do
     clear
-    printf "\
+    printf "${BLUE}\
          ███████████                 █████  ███                     ████              ██████████                     █████                            █████   ████  ████████    █████████ 
         ░░███░░░░░███               ░░███  ░░░                     ░░███             ░░███░░░░███                   ░░███                            ░░███   ███░  ███░░░░███  ███░░░░░███
          ░███    ░███   ██████    ███████  ████   ██████   ██████   ░███   ██████     ░███   ░░███  ██████   ██████  ░███ █████  ██████  ████████     ░███  ███   ░███   ░███ ░███    ░░░ 
@@ -127,8 +115,7 @@ while true; do
          ░███░░░░░███   ███████ ░███ ░███  ░███ ░███ ░░░   ███████  ░███ ░███████     ░███    ░███░███ ░███░███ ░░░  ░██████░  ░███████  ░███ ░░░     ░███░░███    ███░░░░███  ░░░░░░░░███
          ░███    ░███  ███░░███ ░███ ░███  ░███ ░███  ███ ███░░███  ░███ ░███░░░      ░███    ███ ░███ ░███░███  ███ ░███░░███ ░███░░░   ░███         ░███ ░░███  ░███   ░███  ███    ░███
          █████   █████░░████████░░████████ █████░░██████ ░░████████ █████░░██████     ██████████  ░░██████ ░░██████  ████ █████░░██████  █████        █████ ░░████░░████████  ░░█████████ 
-        ░░░░░   ░░░░░  ░░░░░░░░  ░░░░░░░░ ░░░░░  ░░░░░░   ░░░░░░░░ ░░░░░  ░░░░░░     ░░░░░░░░░░    ░░░░░░   ░░░░░░  ░░░░ ░░░░░  ░░░░░░  ░░░░░        ░░░░░   ░░░░  ░░░░░░░░    ░░░░░░░░░  
-
+        ░░░░░   ░░░░░  ░░░░░░░░  ░░░░░░░░ ░░░░░  ░░░░░░   ░░░░░░░░ ░░░░░  ░░░░░░     ░░░░░░░░░░    ░░░░░░   ░░░░░░  ░░░░ ░░░░░  ░░░░░░  ░░░░░        ░░░░░   ░░░░  ░░░░░░░░    ░░░░░░░░░${NC}
 
         ${YELLOW}SETUP AUTO-SCALED RADICALE USING DOCKER AND KUBERNETES${NC}\n
         ${WHITE}Latest:${BUILD_VERSIONS[0]} \t Stable:${BUILD_VERSIONS[1]} \t Test:${BUILD_VERSIONS[2]} ${NC}\n
@@ -140,9 +127,8 @@ while true; do
         [${RED}7${NC}] Apply Test \t\t [${RED}8${NC}] Apply all versions\n
         ${MAGENTA}Cleanup:${NC}
         [${RED}9${NC}] Delete All Radicale Kubernetes Infrastructure
-        [${RED}0${NC}] Exit Script
-        
-        ${WHITE}Please enter your selection...${NC} "
+        [${RED}0${NC}] Exit Script\n
+        ${WHITE}Please enter your selection... ${NC}"
 
     read -n1 choice
     clear
