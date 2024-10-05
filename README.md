@@ -11,6 +11,7 @@ It includes the following features:
 ## Project Structure
 - [`Dockerfile`](Dockerfile): A Dynamic Dockerfile supporting multiple Radicale versions.
 - [`setup.sh`](setup.sh): An interactive Bash script for installation.
+- [`SETUP.md`](SETUP.md): Setup Script Documentation and instructions.
 - [`deployment_tmp.yaml`](deployment_tmp.yaml): Template for Kubernetes deployment configuration specific to Radicale versions.
 - [`k8s/ingress.yaml`](k8s/ingress.yaml): Kubernetes ingress configuration for Radicale versions.
 - [`k8s/pv.yaml`](k8s/pv.yaml): Kubernetes Persistent Volume configuration for Radicale versions.
@@ -40,4 +41,5 @@ It includes the following features:
 ├── 📜 README.md
 ├── 📜 service_tmp.yaml
 ├── ⚙️ setup.sh
+├── 📜 SETUP.md
 └── 📝 TASK.md

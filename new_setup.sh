@@ -1,29 +1,26 @@
 #!/bin/bash
 
-# Define colors
-RED='\033[1;91m'
-GREEN='\033[1;32m'
-YELLOW='\033[1;4;33m'
-CYAN='\033[1;36m'
-BLUE='\033[1;34m'
-MAGENTA='\033[1;35m'
-WHITE='\033[1;37m'
-NC='\033[0m' # No Color
+# Enable strict mode for better error handling
+set -o errexit    # Exit on any command failing
+set -o nounset    # Treat unset variables as an error
+set -o pipefail   # Return non-zero status if any part of a pipeline fails
+set -o errtrace   # Trap ERR signals in functions and subshells
 
-# Sleep time
+# Sleep duration between actions for smoother user experience
 SLEEP_DURATION=2
 
-# Docker Hub credentials
+# Docker Hub credentials (stored in base64 for demo purposes)
 DOCKER_USERNAME="orinahum1982"
 IMAGE_NAME="radicale"
 DOCKER_TOKEN_BASE64="ZGNrcl9wYXRfaklkN3FNVGdKSzQ1dExWMHl2XzVjeG1FZjRnCg=="
-DOCKER_TOKEN=$(echo $DOCKER_TOKEN_BASE64 | base64 --decode)
+DOCKER_TOKEN=$(echo "$DOCKER_TOKEN_BASE64" | base64 --decode) # Decode the token for use
 
-# Dynamic versions with defaults
+# Dynamic build versions for Docker images
+# If no command-line arguments are provided, it uses default versions
 VERSIONS=("latest" "stable" "test")
 BUILD_VERSIONS=("${1:-3.2.3}" "${2:-3.2.2}" "${3:-master}")
 
-# DockerHub login
+# Function to login to DockerHub using the decoded token
 login_to_docker() {
     printf "${CYAN}Logging into Docker Hub...${NC}\n"
     echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin >> /dev/null
@@ -36,14 +33,17 @@ login_to_docker() {
     sleep $SLEEP_DURATION
 }
 
-# Function to find/replace and deploy Kubernetes resources
+# Function to find/replace version placeholders and apply Kubernetes resources
 find_replace_and_apply() {
     local version=$1
     local port=$2
 
+    # Replace placeholder in template files with actual version and port
     sed "s/V_PH/${version}/g" deployment_tmp.yaml > k8s/deployment.yaml
     sed "s/V_PH/${version}/g" service_tmp.yaml > k8s/service.yaml
     sed -i "s/V_PH/${port}/g" k8s/service.yaml
+
+    # Apply Kubernetes resources
     printf "${CYAN}Deploying version ${MAGENTA}${version}${NC} on port ${MAGENTA}${port}${NC}...\n"
     kubectl apply -f ./k8s/pv.yaml
     kubectl apply -f ./k8s/pvc.yaml
@@ -51,6 +51,8 @@ find_replace_and_apply() {
     kubectl apply -f ./k8s/ingress.yaml
     kubectl apply -f ./k8s/deployment.yaml
     printf "${GREEN}Deployment of version ${version} completed!${NC}\n"
+    
+    # Clean up temporary files
     rm -rf k8s/deployment.yaml k8s/service.yaml
 }
 
@@ -59,9 +61,12 @@ find_replace_and_delete() {
     local version=$1
     local port=$2
 
+    # Replace placeholder in template files with actual version and port
     sed "s/V_PH/${version}/g" deployment_tmp.yaml > k8s/deployment.yaml
     sed "s/V_PH/${version}/g" service_tmp.yaml > k8s/service.yaml
     sed -i "s/V_PH/${port}/g" k8s/service.yaml
+
+    # Delete Kubernetes resources
     printf "${CYAN}Deleting version ${MAGENTA}${version}${NC}...\n"
     kubectl delete -f ./k8s/deployment.yaml    
     kubectl delete -f ./k8s/service.yaml
@@ -69,6 +74,8 @@ find_replace_and_delete() {
     kubectl delete -f ./k8s/pvc.yaml
     kubectl delete -f ./k8s/pv.yaml
     printf "${GREEN}Cleanup of version ${version} completed!${NC}\n"
+
+    # Clean up temporary files
     rm -rf k8s/deployment.yaml k8s/service.yaml
 }
 
@@ -77,9 +84,12 @@ build_and_push() {
     local version=$1
     local build_arg=$2
 
+    # Build and push the Docker image to DockerHub
     printf "${CYAN}Building and pushing Docker image for version ${MAGENTA}${version}${NC}...\n"
     docker build -f Dockerfile -t $DOCKER_USERNAME/$IMAGE_NAME:$version --build-arg VERSION=$build_arg . --no-cache
     docker push $DOCKER_USERNAME/$IMAGE_NAME:$version
+
+    # Check if the build and push succeeded
     if [ $? -eq 0 ]; then
         printf "${GREEN}Docker image ${version} built and pushed successfully!${NC}\n"
     else
@@ -87,13 +97,14 @@ build_and_push() {
     fi
 }
 
-# Function to handle version operations
+# Function to handle version-based operations for build/push/apply/delete
 handle_version_operations() {
     local action=$1
     for i in "${!VERSIONS[@]}"; do
         version="${VERSIONS[$i]}"
         build_version="${BUILD_VERSIONS[$i]}"
 
+        # Perform the action (push, apply, delete) based on user choice
         if [ "$action" == "push" ]; then
             build_and_push "$version" "$build_version"
         elif [ "$action" == "apply" ]; then
@@ -104,8 +115,19 @@ handle_version_operations() {
     done
 }
 
-# Menu logic with a clean, professional look
+# Define colors for the UI
+RED='\033[1;91m'
+GREEN='\033[1;32m'
+YELLOW='\033[1;4;33m'
+CYAN='\033[1;36m'
+BLUE='\033[1;34m'
+MAGENTA='\033[1;35m'
+WHITE='\033[1;37m'
+NC='\033[0m' # No Color
+
+# Main menu loop with interactive options for the user
 while true; do
+    # Clear the screen and print the menu with a professional UI
     clear
     printf "${BLUE}\
          ███████████                 █████  ███                     ████              ██████████                     █████                            █████   ████  ████████    █████████ 
@@ -130,9 +152,11 @@ while true; do
         [${RED}0${NC}] Exit Script\n
         ${WHITE}Please enter your selection... ${NC}"
 
+    # Get user input for menu selection
     read -n1 choice
     clear
 
+    # Handle the user's choice
     case "$choice" in
         1) build_and_push "${VERSIONS[0]}" "${BUILD_VERSIONS[0]}"; sleep $SLEEP_DURATION;;
         2) build_and_push "${VERSIONS[1]}" "${BUILD_VERSIONS[1]}"; sleep $SLEEP_DURATION;;
