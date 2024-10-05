@@ -22,14 +22,14 @@ function find_replace_and_apply() {
 
     sed "s/V_PH/${version}/g" deployment_tmp.yaml > k8s/deployment.yaml
     sed "s/V_PH/${version}/g" service_tmp.yaml > k8s/service.yaml
-    sed -i "s/V_PH/${port}/g" k8s/service.yaml
-    
+    sed -i '' "s/V_PH/${port}/g" k8s/service.yaml
+    echo $port
+    kubectl apply -f ./k8s/pv.yaml
     kubectl apply -f ./k8s/pvc.yaml
     kubectl apply -f ./k8s/service.yaml
     kubectl apply -f ./k8s/ingress.yaml
     kubectl apply -f ./k8s/deployment.yaml
-    kubectl apply -f ./k8s/pv.yaml
-    rm -rf k8s/deployment.yaml k8s/service.yaml
+    # rm -rf k8s/deployment.yaml k8s/service.yaml
 }
 
 function find_replace_and_delete() {
@@ -38,7 +38,7 @@ function find_replace_and_delete() {
 
     sed "s/V_PH/${version}/g" deployment_tmp.yaml > k8s/deployment.yaml
     sed "s/V_PH/${version}/g" service_tmp.yaml > k8s/service.yaml
-    sed -i "s/V_PH/${port}/g" k8s/service.yaml
+    sed -i '' "s/V_PH/${port}/g" k8s/service.yaml
 
     kubectl delete -f ./k8s/deployment.yaml    
     kubectl delete -f ./k8s/service.yaml
@@ -46,7 +46,7 @@ function find_replace_and_delete() {
     kubectl delete -f ./k8s/pvc.yaml
     kubectl delete -f ./k8s/pv.yaml
 
-    rm -rf k8s/deployment.yaml k8s/service.yaml
+    # rm -rf k8s/deployment.yaml k8s/service.yaml
 }
 
 # General function to build and push Docker image

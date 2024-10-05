@@ -4,9 +4,10 @@ metadata:
   name: radicale-pv
 spec:
   capacity:
-    storage: 1.5Gi
+    storage: 2Gi
   accessModes:
     - ReadWriteOnce
-  storageClassName: ""
-  claimRef:
-    name: radicale-pvc
+  hostPath:
+    path: /tmp/data/radicale # This is the path on the host where the data will be stored
+    type: DirectoryOrCreate
+  persistentVolumeReclaimPolicy: Retain
