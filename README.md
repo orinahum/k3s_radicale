@@ -28,7 +28,6 @@ It includes the following features:
 │   └── 🖼️ k8s_docker.png
 │   └── 🖼️ setup.png
 ├── 📂 config
-│   ├── 🔑 htpasswd
 │   └── ⚙️ radicale.config
 ├── 📂 k8s
 │   ├── 📜 pv.yaml
