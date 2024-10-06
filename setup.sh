@@ -1,15 +1,18 @@
 #!/bin/bash
+######################################################################################
+# Created by Avishay & Ori
+# Purpose: Script automates the deployment Radicale using containerd based Kubernetes.
+# Date: 06/10/2024
+# Version: 1.0.2
+# set -x          # Enable debug mode
+set -o errexit  # Exit on any command failing
+set -o pipefail # Return non-zero status if any part of a pipeline fails
+######################################################################################
 
 # Define colors for the UI
 RED='\033[1;91m'    GREEN='\033[1;32m'  YELLOW='\033[1;4;33m'
 CYAN='\033[1;36m'   BLUE='\033[1;34m'   MAGENTA='\033[1;35m'
 WHITE='\033[1;37m'  NC='\033[0m' # No Color
-
-# Enable strict mode for better error handling
-set -o errexit      # Exit on any command failing
-set -o nounset      # Treat unset variables as an error
-set -o pipefail     # Return non-zero status if any part of a pipeline fails
-set -o errtrace     # Trap ERR signals in functions and subshells
 
 # Sleep duration between actions for smoother user experience
 SLEEP_DURATION=2

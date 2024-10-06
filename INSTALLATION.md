@@ -18,7 +18,7 @@ Before you begin, ensure you have the following installed:
    - [macOS]   follow: https://kubernetes.io/docs/tasks/tools/install-kubectl-macos/
    - [Windows] follow: https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/
 
-## 2. Run setup instalation script:
+## 2. Run setup installation script:
 [`Setup Documentation`](SETUP.md)
 ```bash
 chmod +x setup.sh
