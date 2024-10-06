@@ -1,18 +1,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: radicale-deployment-V_PH ## This is a placeholder to be manipulated by the bash script
+  name: radicale-deployment-{{V_PH}} ## This is a placeholder to be manipulated by the bash script
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: radicale
-      version: V_PH ## This is a placeholder to be manipulated by the bash script
+      version: {{V_PH}} ## This is a placeholder to be manipulated by the bash script
   template:
     metadata:
       labels:
         app: radicale
-        version: V_PH ## This is a placeholder to be manipulated by the bash script
+        version: {{V_PH}} ## This is a placeholder to be manipulated by the bash script
     spec:
       volumes:
       - name: radicale-storage
@@ -20,7 +20,7 @@ spec:
           claimName: radicale-pvc
       containers:
       - name: radicale
-        image: orinahum1982/radicale:V_PH ## This is a placeholder to be manipulated by the bash script
+        image: orinahum1982/radicale:{{V_PH}} ## This is a placeholder to be manipulated by the bash script
         ports:
         - containerPort: 5232  # This is the internal container port
         volumeMounts:

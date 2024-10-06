@@ -1,7 +1,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: radicale-ingress
+  name: radicale-ingress-{{V_PH}}
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
@@ -13,6 +13,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: radicale-service
+            name: radicale-service-{{V_PH}}
             port:
-              number: 80
+              number: {{P_PH}}

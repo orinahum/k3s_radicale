@@ -26,20 +26,22 @@ It includes the following features:
 │   ├── 🖼️ contribute.png
 │   ├── 🖼️ installation.png
 │   └── 🖼️ k8s_docker.png
+│   └── 🖼️ setup.png
 ├── 📂 config
 │   ├── 🔑 htpasswd
 │   └── ⚙️ radicale.config
 ├── 📂 k8s
-│   ├── 📜 ingress.yaml
 │   ├── 📜 pv.yaml
 │   └── 📜 pvc.yaml
+├── 📂 k8s_templates
+│   ├── 📜 deployment_tmp.yaml
+│   ├── 📜 ingress_tmp.yaml
+│   ├── 📜 service_tmp.yaml
 ├── 📝 .gitignore
 ├── 📝 CONTRIBUTERS.md
-├── 📜 deployment_tmp.yaml
 ├── 📝 INSTALLATION.md
 ├── 🐳 Dockerfile
 ├── 📜 README.md
-├── 📜 service_tmp.yaml
-├── ⚙️ setup.sh
 ├── 📜 SETUP.md
+├── ⚙️ setup.sh
 └── 📝 TASK.md

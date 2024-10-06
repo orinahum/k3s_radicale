@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: radicale-service-{{V_PH}} ## This is a placeholder to be manipulated by the bash script
+  labels:
+    app: radicale
+    version: {{V_PH}} ## This is a placeholder to be manipulated by the bash script
+spec:
+  type: LoadBalancer
+  selector:
+    app: radicale
+    version: {{V_PH}} ## This is a placeholder to be manipulated by the bash script
+  ports:
+  - protocol: TCP
+    port: {{P_PH}}         # External port for latest version
+    targetPort: 5232  # Internal port in the container
+
