@@ -55,9 +55,9 @@ find_replace_and_apply() {
     # Replace placeholder in template files with actual version and port
     sed "s/{{V_PH}}/${version}/g" k8s_templates/deployment_tmp.yaml > k8s/deployment.yaml
     sed "s/{{V_PH}}/${version}/g" k8s_templates/service_tmp.yaml > k8s/service.yaml
-    sed -i '' "s/{{P_PH}}/${port}/g" k8s/service.yaml
+    sed -i "s/{{P_PH}}/${port}/g" k8s/service.yaml
     sed "s/{{V_PH}}/${version}/g" k8s_templates/ingress_tmp.yaml > k8s/ingress.yaml
-    sed -i '' "s/{{P_PH}}/${port}/g" k8s/ingress.yaml
+    sed -i "s/{{P_PH}}/${port}/g" k8s/ingress.yaml
 
     # Apply Kubernetes resources
     printf "${CYAN}Deploying version ${MAGENTA}${version}${NC} on port ${MAGENTA}${port}${NC}...\n"
@@ -81,9 +81,9 @@ find_replace_and_delete() {
     # Replace placeholder in template files with actual version and port
     sed "s/{{V_PH}}/${version}/g" k8s_templates/deployment_tmp.yaml > k8s/deployment.yaml
     sed "s/{{V_PH}}/${version}/g" k8s_templates/service_tmp.yaml > k8s/service.yaml
-    sed -i '' "s/{{P_PH}}/${port}/g" k8s/service.yaml
+    sed -i "s/{{P_PH}}/${port}/g" k8s/service.yaml
     sed "s/{{V_PH}}/${version}/g" k8s_templates/ingress_tmp.yaml > k8s/ingress.yaml
-    sed -i '' "s/{{P_PH}}/${port}/g" k8s/ingress.yaml
+    sed -i "s/{{P_PH}}/${port}/g" k8s/ingress.yaml
 
     # Delete Kubernetes resources
     printf "${CYAN}Deleting version ${MAGENTA}${version}${NC}...\n"
