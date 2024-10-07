@@ -3,8 +3,12 @@ kind: PersistentVolumeClaim
 metadata:
   name: radicale-pvc
 spec:
+  storageClassName: "radicale"
   accessModes:
     - ReadWriteOnce
   resources:
     requests:
       storage: 1Gi
+  selector:
+    matchLabels:
+      type: local
