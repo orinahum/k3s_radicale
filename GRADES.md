@@ -6,5 +6,5 @@ Great work on the project structure, organization and setup. It needs somewhat p
 The grades are temporary, due to question in [suggestions file](https://github.com/zero-pytagoras/k3s_radicale_ori_avishay/blob/main/SUGGESTIONS.md), I'll update the grade after the answer
 ### Grades:
 
-- Avishay  : 80
-- Ori      : 80
+- Avishay  : 90
+- Ori      : 90
